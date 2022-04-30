@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactTypeController;
 use App\Http\Controllers\PersonContactController;
 use App\Http\Controllers\PersonController;
 use Illuminate\Http\Request;
@@ -24,4 +25,6 @@ Route::group(['name' => 'v1', 'prefix' => 'v1'], function(){
     Route::resource('/person', PersonController::class);
     
     Route::resource('/person_contact', PersonContactController::class);
+
+    Route::resource('/contact_type', ContactTypeController::class);
 });
