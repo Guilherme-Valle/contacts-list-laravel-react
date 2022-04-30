@@ -66,8 +66,8 @@ function PersonContactDialog(props) {
             <DialogActions>
                 <Button onClick={handleClose}> Cancelar </Button>
                 {props.isEdit ?
-                    <Button onClick={() => { editPersonContact(props.id, contactTypeId, value); handleClose(); }}>Salvar</Button> :
-                    <Button onClick={() => createPersonContact(personId, contactTypeId, value)}>Salvar</Button>}
+                    <Button onClick={() => { editPersonContact(props.id, contactTypeId, value); handleClose(); }} disabled={!value}>Salvar</Button> :
+                    <Button onClick={() => createPersonContact(personId, contactTypeId, value)} disabled={!value}>Salvar</Button>}
             </DialogActions>
         </Dialog>
     )

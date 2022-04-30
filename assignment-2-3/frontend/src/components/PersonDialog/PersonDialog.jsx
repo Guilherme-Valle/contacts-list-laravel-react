@@ -29,8 +29,8 @@ function PersonDialog(props) {
             <DialogActions>
                 <Button onClick={handleClose}> Cancelar </Button>
                 {props.isEdit ?
-                    <Button onClick={() => { editPerson(props.id, personName); handleClose(); }}>Salvar</Button> :
-                    <Button onClick={() => createPerson(personName)}>Salvar</Button>}
+                    <Button onClick={() => { editPerson(props.id, personName); handleClose(); }} disabled={!personName}>Salvar</Button> :
+                    <Button onClick={() => createPerson(personName)} disabled={!personName}>Salvar</Button>}
             </DialogActions>
         </Dialog>
     )
