@@ -9,9 +9,11 @@ export const ContactListProvider = ({ children }) => {
     const [newContactModalPersonId, setNewContactModalPersonId] = useState(null);
     const [persons, setPersons] = useState([]);
 
+    const apiHost = 'http://104.248.61.216:8090/'
+
 
     const getPersons = () => {
-        axios.get('http://localhost:8090/api/v1/person').then(({ data }) => {
+        axios.get(apiHost + 'api/v1/person').then(({ data }) => {
             setPersons(data);
         });
     }
@@ -38,7 +40,7 @@ export const ContactListProvider = ({ children }) => {
     }
 
     const createPerson = (name) => {
-        axios.post('http://localhost:8090/api/v1/person', {
+        axios.post(apiHost + 'api/v1/person', {
             name
         }).then(() => {
             getPersons();
@@ -47,7 +49,7 @@ export const ContactListProvider = ({ children }) => {
     }
 
     const editPerson = (id, name) => {
-        axios.put(`http://localhost:8090/api/v1/person/${id}`, {
+        axios.put(`${apiHost}api/v1/person/${id}`, {
             name
         }).then(() => {
             getPersons();
@@ -55,14 +57,14 @@ export const ContactListProvider = ({ children }) => {
     }
 
     const deletePerson = (id) => {
-        axios.delete(`http://localhost:8090/api/v1/person/${id}`)
+        axios.delete(`${apiHost}api/v1/person/${id}`)
             .then(() => {
                 getPersons();
             })
     }
 
     const createPersonContact = (personId, contactTypeId, value) => {
-        axios.post('http://localhost:8090/api/v1/person_contact', {
+        axios.post(apiHost + 'api/v1/person_contact', {
             person_id: personId, contact_type_id: contactTypeId, value
         }).then(() => {
             getPersons();
@@ -71,7 +73,7 @@ export const ContactListProvider = ({ children }) => {
     }
 
     const editPersonContact = (id, contactTypeId, value) => {
-        axios.put(`http://localhost:8090/api/v1/person_contact/${id}`, {
+        axios.put(`${apiHost}api/v1/person_contact/${id}`, {
             contact_type_id: contactTypeId, value
         }).then(() => {
             getPersons();
@@ -79,7 +81,7 @@ export const ContactListProvider = ({ children }) => {
     }
 
     const deletePersonContact = (id) => {
-        axios.delete(`http://localhost:8090/api/v1/person_contact/${id}`)
+        axios.delete(`${apiHost}api/v1/person_contact/${id}`)
             .then(() => {
                 getPersons();
             })
