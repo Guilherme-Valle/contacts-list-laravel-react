@@ -1,5 +1,5 @@
 import styles from './Person.module.css'
-import { Collapse, ListItem } from '@mui/material';
+import { Collapse } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -8,10 +8,14 @@ import PersonContact from '../PersonContact/PersonContact';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import PersonDialog from '../PersonDialog/PersonDialog';
 import AddContactButton from '../AddContactButton/AddContactButton';
+import { ContactListContext } from '../ContactListProvider/ContactListProvider';
+import { useContext } from 'react';
+import PersonContactDialog from '../PersonContactDialog/PersonContactDialog';
 
-function Person({ id, name, contacts, handleEdit, handleDelete }) {
+function Person({ id, name, contacts }) {
     const [expandChildren, setExpandChildren] = useState(false);
     const [modalOpened, setModalOpened] = useState(false);
+    const { deletePerson } = useContext(ContactListContext);
 
     const handleModalOpen = () => {
         setModalOpened(true);
@@ -33,7 +37,7 @@ function Person({ id, name, contacts, handleEdit, handleDelete }) {
                 <div className={styles.person__icons}>
                     <EditIcon sx={{ marginRight: '5px' }} style={styleIcon}
                         onClick={handleModalOpen} />
-                    <DeleteIcon style={styleIcon} onClick={() => handleDelete(id)} />
+                    <DeleteIcon style={styleIcon} onClick={() => deletePerson(id)} />
                     {expandChildren ?
                         <ExpandLessIcon style={styleIcon}
                             onClick={() => setExpandChildren(!expandChildren)}
@@ -46,20 +50,24 @@ function Person({ id, name, contacts, handleEdit, handleDelete }) {
             </div>
 
             <Collapse in={expandChildren} timeout="auto" unmountOnExit
-                sx={{ width: '45%' }}>
+                sx={{
+                    width: '45%', '@media (max-width: 900px)': {
+                        width: '85%'
+                    }
+                }}>
                 <div className={styles.collapsed}>
                     {contacts ? contacts.map((contact) => {
-                        return <PersonContact {...contact} />
+                        return <PersonContact key={contact.id} {...contact} />
                     }) : null}
-                    <AddContactButton />
+                    <AddContactButton personId={id} />
                 </div>
             </Collapse>
 
-            <PersonDialog open={modalOpened} handleClose={handleModalClose}
+            <PersonDialog open={modalOpened}
+                handleClose={handleModalClose}
                 isEdit={true}
                 id={id}
-                name={name}
-                handleSubmit={handleEdit} />
+                name={name} />
 
         </>
 

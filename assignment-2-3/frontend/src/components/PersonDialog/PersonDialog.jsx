@@ -1,8 +1,13 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import React, { useState } from "react"
+import { ContactListContext } from '../ContactListProvider/ContactListProvider';
+import { useContext } from 'react';
 
 function PersonDialog(props) {
     const [personName, setPersonName] = useState(props.name ? props.name : '');
+    const { modalOpened, handleModalClose, createPerson, editPerson } = useContext(ContactListContext);
+
+    const handleClose = props.isEdit ? props.handleClose : handleModalClose;
 
     const handleInputChange = (e) => {
         const newValue = e.currentTarget.value;
@@ -10,7 +15,7 @@ function PersonDialog(props) {
     }
 
     return (
-        <Dialog open={props.open} onClose={props.handleClose}>
+        <Dialog open={modalOpened || (props.isEdit && props.open)} onClose={handleClose}>
             <DialogTitle>{props.isEdit ? 'Editar' : 'Criar'} pessoa</DialogTitle>
 
             <DialogContent>
@@ -22,10 +27,10 @@ function PersonDialog(props) {
             </DialogContent>
 
             <DialogActions>
-                <Button onClick={props.handleClose}> Cancelar </Button>
+                <Button onClick={handleClose}> Cancelar </Button>
                 {props.isEdit ?
-                    <Button onClick={() => { props.handleSubmit(props.id, personName); props.handleClose(); }}>Salvar</Button> :
-                    <Button onClick={() => props.handleSubmit(personName)}>Salvar</Button>}
+                    <Button onClick={() => { editPerson(props.id, personName); handleClose(); }}>Salvar</Button> :
+                    <Button onClick={() => createPerson(personName)}>Salvar</Button>}
             </DialogActions>
         </Dialog>
     )

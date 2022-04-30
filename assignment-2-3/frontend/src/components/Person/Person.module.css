@@ -14,3 +14,9 @@
 .collapsed {
     width: 100%;
 }
+
+@media screen and (max-width: 900px) {
+    .Person {
+        width: 90%;
+    }
+}
