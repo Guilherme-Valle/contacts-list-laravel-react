@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField } from "@mui/material"
 import React, { useState } from "react"
 import { ContactListContext } from '../ContactListProvider/ContactListProvider';
 import { useContext } from 'react';
@@ -20,9 +20,11 @@ function PersonDialog(props) {
 
             <DialogContent>
 
-                <TextField id="personName" label={'Digite o nome da pessoa'} name="itemName" fullWidth
-                    value={personName}
-                    onChange={handleInputChange} />
+                <FormControl fullWidth sx={{mt: 2}}>
+                    <TextField id="personName" label={'Digite o nome da pessoa'} name="itemName" fullWidth
+                        value={personName}
+                        onChange={handleInputChange} />
+                </FormControl>
 
             </DialogContent>
 
